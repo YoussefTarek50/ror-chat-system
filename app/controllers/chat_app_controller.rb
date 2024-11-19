@@ -3,13 +3,10 @@ class ChatAppController < ApplicationController
   protect_from_forgery with: :null_session, only: [ :create ]
 
   def create
-    @chat_app = ChatApp.new(params.require(:chat_app).permit(:name))
+    chat_app_params = params.require(:chat_app).permit(:name).to_h
+    ChatAppJob.perform_later("create", chat_app_params)
 
-    if @chat_app.save
-      render json: { message: "Chat app created successfully with ID: #{@chat_app.id}" }, status: :created
-    else
-      render json: { errors: @chat_app.errors.full_messages }, status: :bad_request
-    end
+    render json: { message: "Chat app creation is in progress" }, status: :accepted
   end
 
   def show
@@ -24,19 +21,11 @@ class ChatAppController < ApplicationController
   end
 
   def update
-    @chat_app = ChatApp.find_by(application_token: params[:application_token])
+    chat_app_params = params.require(:chat_app).permit(:name).to_h
+    application_token = params[:application_token]
 
-    if @chat_app.nil?
-      render json: { error: "Chat app not found" }, status: :not_found
+    ChatAppJob.perform_later("update", chat_app_params, application_token)
 
-    else
-      if @chat_app.update(params.require(:chat_app).permit(:name))
-        render json: @chat_app, status: :ok
-
-      else
-        render json: { error: @chat_app.errors.full_messages }, status: :bad_request
-
-      end
-    end
+    render json: { message: "Chat app update is in progress" }, status: :accepted
   end
 end
