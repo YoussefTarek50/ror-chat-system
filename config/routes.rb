@@ -11,4 +11,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  # Define the custom route for getting a chat_app by application_token
+  get "chat_app/:application_token", to: "chat_app#show", as: "chat_app"
+
+  # Define typical CRUD operations on chat_app
+  resources :chat_app, only: [ :create ]
 end
