@@ -15,7 +15,7 @@ class ChatAppController < ApplicationController
     print("Chat app: #{@chat_app}")
 
     if @chat_app
-      render json: @chat_app, status: :ok
+      render json: @chat_app.as_json(except: :id), status: :ok
     else
       render json: { error: "Chat app not found" }, status: :not_found
     end
