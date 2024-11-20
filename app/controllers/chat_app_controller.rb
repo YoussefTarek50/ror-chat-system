@@ -6,7 +6,8 @@ class ChatAppController < ApplicationController
     chat_app_params = params.require(:chat_app).permit(:name).to_h
     ChatAppJob.perform_later("create", chat_app_params)
 
-    render json: { message: "Chat app creation is in progress" }, status: :accepted
+    count = Sidekiq.redis { |conn| conn.get("chat_app_create_jobs_counter").to_i }
+    render json: { message: "Createing chat app job ##{count}" }, status: :accepted
   end
 
   def show
@@ -26,6 +27,7 @@ class ChatAppController < ApplicationController
 
     ChatAppJob.perform_later("update", chat_app_params, application_token)
 
-    render json: { message: "Chat app update is in progress" }, status: :accepted
+    count = Sidekiq.redis { |conn| conn.get("chat_app_update_jobs_counter").to_i }
+    render json: { message: "Updating chat app job ##{count}" }, status: :accepted
   end
 end

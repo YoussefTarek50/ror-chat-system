@@ -4,6 +4,14 @@ class ChatAppJob < ApplicationJob
   def perform(action, chat_app_params, application_token = nil)
     Rails.logger.info "Performing #{action} action with params: #{chat_app_params.inspect}"
 
+    Sidekiq.redis do |conn|
+      if action == "create"
+        conn.incr("chat_app_create_jobs_counter")
+      elsif action == "update"
+        conn.incr("chat_app_update_jobs_counter")
+      end
+    end
+
     case action
     when "create"
       chat_app = ChatApp.new(chat_app_params)
