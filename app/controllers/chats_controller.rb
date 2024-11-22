@@ -12,20 +12,22 @@ class ChatsController < ApplicationController
   end
 
   def show
-    chat = @chat_app.chats.find_by(chat_number: params[:id])
+    chat = @chat_app.chats.find_by(chat_number: params[:chat_number])
     if chat
-      render json: chat, status: :ok
+      render json: chat.as_json(except: :id), status: :ok
     else
       render json: { error: "Chat not found" }, status: :not_found
     end
   end
 
   def update
-    chat_params = params.require(:chat).permit(:chat_number, :chat_topic).to_h
+    chat_number = params[:chat_number]
+    chat_topic = params[:chat][:chat_topic] || "General"
+    chat_params = { chat_number: chat_number, chat_topic: chat_topic }
+
     ChatJob.perform_later("update", chat_params, @chat_app.application_token)
 
-    update_count = Sidekiq.redis { |conn| conn.get("chat_update_jobs_counter").to_i }
-    render json: { message: "Chat update is in progress", enqueued_update_jobs: update_count }, status: :accepted
+    render json: { message: "Update chat job with topic: #{chat_topic}" }, status: :accepted
   end
 
   def find_chat_app

@@ -5,8 +5,6 @@ class ChatJob < ApplicationJob
     Sidekiq.redis do |conn|
       if action == "create"
         conn.incr("chat_create_jobs_counter")
-      elsif action == "update"
-        conn.incr("chat_update_jobs_counter")
       end
     end
 

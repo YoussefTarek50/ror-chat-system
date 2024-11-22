@@ -25,11 +25,12 @@ Rails.application.routes.draw do
 
   #=================================================================================
   # Chats routes: ==================================================================
+  get "chat_app/:application_token/chats/:chat_number", to: "chats#show", as: "chat"
   post "chat_app/:application_token/chats", to: "chats#create", as: "create_chat"
-  patch "chat_app/:application_token/chats/:id", to: "chats#update", as: "update_chat"
+  patch "chat_app/:application_token/chats/:chat_number", to: "chats#update", as: "update_chat"
 
   # Nested routes for chats under chat_apps application_token:
-  resources :chat_apps, param: :application_token, only: [] do
-    resources :chats, only: [ :show ]
-  end
+  # resources :chat_apps, param: :application_token, only: [] do
+  #   resources :chats, only: [ :show ]
+  # end
 end

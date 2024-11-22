@@ -3,16 +3,21 @@ class ChatAppController < ApplicationController
   protect_from_forgery with: :null_session, only: [ :create ]
 
   def create
-    chat_app_params = params.require(:chat_app).permit(:name).to_h
-    ChatAppJob.perform_later("create", chat_app_params)
+    chat_app_data = {
+      "name" => params.require(:chat_app).permit(:name)[:name],
+      "application_token" => SecureRandom.hex(16) # Generate unique token
+    }
 
-    count = Sidekiq.redis { |conn| conn.get("chat_app_create_jobs_counter").to_i }
-    render json: { message: "Createing chat app job ##{count}" }, status: :accepted
+    ChatAppJob.perform_later("create", chat_app_data)
+
+    render json: {
+      message: "ChatApp creation in progress.",
+      application_token: chat_app_data["application_token"]
+    }, status: :accepted
   end
 
   def show
     @chat_app = ChatApp.find_by(application_token: params[:application_token])
-    print("Chat app: #{@chat_app}")
 
     if @chat_app
       render json: @chat_app.as_json(except: :id), status: :ok
@@ -27,7 +32,6 @@ class ChatAppController < ApplicationController
 
     ChatAppJob.perform_later("update", chat_app_params, application_token)
 
-    count = Sidekiq.redis { |conn| conn.get("chat_app_update_jobs_counter").to_i }
-    render json: { message: "Updating chat app job ##{count}" }, status: :accepted
+    render json: { message: "Updating chat app with name: #{chat_app_params["name"]}" }, status: :accepted
   end
 end
