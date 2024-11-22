@@ -12,12 +12,22 @@ class MessagesController < ApplicationController
     render json: { message: "Creating message with number: #{message_number}" }, status: :accepted
   end
 
+  def show
+    message_number = params[:message_number]
+    message = Message.find_by(message_number: message_number)
+
+    if message
+      render json: message.as_json(except: :id), status: :ok
+    else
+      render json: { error: "Message not found" }, status: :not_found
+    end
+  end
+
   def update
     message_params = params.require(:message).permit(:text)
     message_number = params[:message_number]
     message_params = message_params.merge(message_number: message_number)
 
-    print("================ Message params:  #{message_params}")
     MessageJob.perform_later("update", message_params, @chat.chat_number, @chat.application_token)
     render json: { message: "Updating message with number: #{message_params[:message_number]}" }, status: :accepted
   end
