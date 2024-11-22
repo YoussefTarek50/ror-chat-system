@@ -9,7 +9,7 @@ class ChatJob < ApplicationJob
     end
 
     chat_app = ChatApp.find_by(application_token: application_token)
-    return unless chat_app
+    raise "ChatApp not found!" unless chat_app
 
     case action
     when "create"
@@ -33,6 +33,8 @@ class ChatJob < ApplicationJob
           Rails.logger.error "Failed to update chat: #{chat.errors.full_messages.join(', ')}"
         end
       end
+    else
+      Rails.logger.error "Invalid action: #{action}"
     end
   end
 end

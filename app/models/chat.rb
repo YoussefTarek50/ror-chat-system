@@ -1,5 +1,6 @@
 class Chat < ApplicationRecord
   belongs_to :chat_app, foreign_key: "application_token", primary_key: "application_token"
+  has_many :messages, dependent: :destroy
 
   validates :chat_number, presence: true
   validates :application_token, presence: true

@@ -8,7 +8,7 @@ class ChatsController < ApplicationController
     chat_params = { chat_number: next_chat_number, chat_topic: params[:chat][:chat_topic] || "General" }
 
     ChatJob.perform_later("create", chat_params, @chat_app.application_token)
-    render json: { message: "Create chat job ##{next_chat_number}" }, status: :accepted
+    render json: { message: "Create chat with chat_number: #{next_chat_number}" }, status: :accepted
   end
 
   def show

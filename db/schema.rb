@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_21_174456) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_22_200650) do
   create_table "chat_apps", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -26,9 +26,23 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_21_174456) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "chat_topic"
+    t.integer "messages_count", default: 0, null: false
     t.index ["application_token"], name: "index_chats_on_application_token"
+    t.index ["chat_number", "application_token"], name: "index_chats_on_chat_number_and_application_token", unique: true
     t.index ["chat_number"], name: "index_chats_on_chat_number"
   end
 
+  create_table "messages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "application_token", null: false
+    t.integer "chat_number", null: false
+    t.integer "message_number", null: false
+    t.string "text", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_number", "application_token"], name: "fk_rails_db34b63fe0"
+    t.index ["message_number", "chat_number", "application_token"], name: "idx_on_message_number_chat_number_application_token_588d9de9f1"
+  end
+
   add_foreign_key "chats", "chat_apps", column: "application_token", primary_key: "application_token"
+  add_foreign_key "messages", "chats", column: ["chat_number", "application_token"], primary_key: ["chat_number", "application_token"]
 end
