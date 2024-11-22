@@ -20,6 +20,7 @@ class ChatAppJob < ApplicationJob
       else
         Rails.logger.error "Failed to create chat app: #{chat_app.errors.full_messages.join(', ')}"
       end
+
     when "update"
       chat_app = ChatApp.find_by(application_token: application_token)
       if chat_app.nil?
@@ -31,6 +32,7 @@ class ChatAppJob < ApplicationJob
           Rails.logger.error "Failed to update chat app: #{chat_app.errors.full_messages.join(', ')}"
         end
       end
+
     else
       Rails.logger.error "Invalid action: #{action}"
     end
