@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
     message_params = message_params.merge(message_number: message_number)
 
     MessageJob.perform_later("create", message_params, @chat.chat_number, @chat.application_token)
-    render json: { message: "Creating message with number: #{message_number}" }, status: :accepted
+    render json: { message: "Creating message with number: #{message_params[:message_number]}" }, status: :accepted
   end
 
   def show
@@ -30,6 +30,16 @@ class MessagesController < ApplicationController
 
     MessageJob.perform_later("update", message_params, @chat.chat_number, @chat.application_token)
     render json: { message: "Updating message with number: #{message_params[:message_number]}" }, status: :accepted
+  end
+
+  def search
+    message_text = params[:query]
+    if message_text.nil?
+      render json: { error: "No text provided to search for" }, status: :not_found
+    else
+      @messages = Message.search(message_text).records
+      render json: @messages.as_json(except: :id)
+    end
   end
 
 
