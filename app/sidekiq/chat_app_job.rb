@@ -7,7 +7,7 @@ class ChatAppJob < ApplicationJob
     case action
     when "create"
        # Find or initialize the ChatApp
-       chat_app = ChatApp.find_or_initialize_by(application_token: chat_app_params["application_token"])
+       chat_app = ChatApp.new(application_token: chat_app_params["application_token"])
        chat_app.name = chat_app_params["name"]
 
        if chat_app.save

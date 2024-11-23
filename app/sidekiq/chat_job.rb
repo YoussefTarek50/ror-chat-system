@@ -15,7 +15,7 @@ class ChatJob < ApplicationJob
     when "create"
       chat = chat_app.chats.new(chat_params)
       if chat.save
-        chat_app.increment!(:chat_count)
+        # chat_app.increment!(:chat_count)
         Rails.logger.info "Chat created successfully with chat_number: #{chat.chat_number}, chat_topic: #{chat.chat_topic}"
       else
         Rails.logger.error "Failed to create chat: #{chat.errors.full_messages.join(', ')}"

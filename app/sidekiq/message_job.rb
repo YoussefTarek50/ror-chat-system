@@ -45,11 +45,10 @@ class MessageJob < ApplicationJob
     case action
     when "create"
       message_number = message_params[:message_number]
-      Rails.logger.info "MESSAGE NUMBERRRRRRRRRRRR #{message_number}"
 
       message = Message.new(text: message_params[:text], message_number: message_number, chat_number: chat.chat_number, application_token: chat.application_token)
       if message.save
-        chat.increment!(:messages_count)
+        # chat.increment!(:messages_count)
         Rails.logger.info "Message created successfully with message_number: #{message.message_number}"
       else
         Rails.logger.error "Failed to create message: #{message.errors.full_messages.join(', ')}"

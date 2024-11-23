@@ -9,7 +9,7 @@ class Message < ApplicationRecord
   end
 
   belongs_to :chat, foreign_key: [ :chat_number, :application_token ],
-                                    primary_key: [ :chat_number, :application_token ]
+                                    primary_key: [ :chat_number, :application_token ], counter_cache: :messages_count
 
 
   after_create :index_message
