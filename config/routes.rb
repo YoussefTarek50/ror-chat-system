@@ -13,16 +13,14 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   # ChatApp routes: =================================================================
-  # Defines the custom route for getting a chat_app by application_token
+  get "chat_app", to: "chat_app#index", as: "chat_app_index"
   get "chat_app/:application_token", to: "chat_app#show", as: "chat_app"
-  # Defines the custom route for creating a chat_app by application_token
   post "chat_app", to: "chat_app#create", as: "create_chat_app"
-  # Defines the custom route for updating a chat_app by application_token
   patch "chat_app/:application_token", to: "chat_app#update", as: "update_chat_app"
-
   #=================================================================================
 
   # Chats routes: ==================================================================
+  get "chat_app/:application_token/chats", to: "chats#index", as: "chat_index"
   get "chat_app/:application_token/chats/:chat_number", to: "chats#show", as: "chat"
   post "chat_app/:application_token/chats", to: "chats#create", as: "create_chat"
   patch "chat_app/:application_token/chats/:chat_number", to: "chats#update", as: "update_chat"

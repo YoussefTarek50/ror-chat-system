@@ -16,6 +16,16 @@ class ChatAppController < ApplicationController
     }, status: :accepted
   end
 
+  def index
+    @chat_apps = ChatApp.all
+
+    if @chat_apps
+      render json: @chat_apps.as_json(except: :id), status: :ok
+    else
+      render json: { error: "No chat apps found" }, status: :not_found
+    end
+  end
+
   def show
     @chat_app = ChatApp.find_by(application_token: params[:application_token])
 

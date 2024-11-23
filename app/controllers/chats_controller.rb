@@ -11,6 +11,15 @@ class ChatsController < ApplicationController
     render json: { message: "Create chat with chat_number: #{next_chat_number}" }, status: :accepted
   end
 
+  def index
+    @chat = Chat.all
+    if @chat
+      render json: @chat.as_json(except: :id), status: :ok
+    else
+      render json: { error: "No chatsfound" }, status: :not_found
+    end
+  end
+
   def show
     chat = @chat_app.chats.find_by(chat_number: params[:chat_number])
     if chat
