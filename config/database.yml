@@ -11,15 +11,15 @@
 #
 default: &default
   adapter: mysql2
-  encoding: utf8mb4
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: <%= ENV.fetch("CHAT_DB_USER", "root") %>
-  password: <%= ENV.fetch("CHAT_DB_PASSWORD", "password")%>
-  socket: /var/run/mysqld/mysqld.sock
+  encoding: utf8
+  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
+  username: <%= ENV['DATABASE_USER'] || 'root' %>
+  password: <%= ENV['DATABASE_PASSWORD'] || '' %>
+  port: <%= ENV['DATABASE_PORT'] || 3306 %>
 
 development:
   <<: *default
-  database: chat_system_development
+  database: app_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

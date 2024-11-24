@@ -1,0 +1,68 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+      - elasticsearch
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 3306
+      DATABASE_USER: root
+      DATABASE_PASSWORD: password
+      REDIS_URL: redis://redis:6379/1
+      ELASTICSEARCH_URL: https://elasticsearch:9200
+      RAILS_ENV: development
+    command: dockerize -wait tcp://elasticsearch:9200 -timeout 120s bash -c "bin/rails db:prepare && bin/rails server -b 0.0.0.0"
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: app_development
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  redis:
+    image: redis/redis-stack:latest
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: dockerize -wait tcp://elasticsearch:9200 -timeout 120s bundle exec sidekiq #command: bash -c "gem install bundler -v '~> 2.5' && bundle install && bundle exec sidekiq"
+    depends_on:
+      - app
+      - redis
+      - db
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 3306
+      DATABASE_USER: root
+      DATABASE_PASSWORD: password
+      REDIS_URL: redis://redis:6379/1
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.1
+    environment:
+      discovery.type: single-node
+      ELASTIC_PASSWORD: Kq6hRS*dsQvyWf3tQiB0
+    ports:
+      - "9200:9200"
+    mem_limit: 2g
+
+volumes:
+  db_data:

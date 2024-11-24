@@ -115,7 +115,6 @@ GEM
       elasticsearch (~> 8)
       hashie
     elasticsearch-rails (8.0.0)
-    error_highlight (0.6.0)
     erubi (1.13.0)
     faraday (2.12.1)
       faraday-net_http (>= 2.0, < 3.5)
@@ -343,8 +342,7 @@ DEPENDENCIES
   capybara
   debug
   elasticsearch-model
-  elasticsearch-rails
-  error_highlight (>= 0.4.0)
+  elasticsearch-rails (~> 8.0)
   importmap-rails
   jbuilder
   mysql2 (~> 0.5)
