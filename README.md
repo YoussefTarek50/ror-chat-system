@@ -21,7 +21,7 @@ Info about the system:
 
 * Rails version: 7.2.2
 
-* Services: Sidekiq, Redis, Elasticsearch
+* Services: MySQL, Sidekiq, Redis, Elasticsearch
 
 Running prerequisites:
 
