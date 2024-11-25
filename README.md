@@ -1,10 +1,12 @@
 # README
 
 The chat apps system consists of APIs for creating, updating and viewing chat apps, chats, and messages.
+
 Each chat app is identified by a unique token.
 Each chat app has it's own chats, a chat has a unique chat number and a chat topic.
 Each chat has it's own messages, a message has it's text, and a message number to identify it. Additionaly you can 
 search for a message by a part of it's text.
+
 The uniqueness of each entity is guaranteed by using redis.
 A queuing system is used (sidekiq) to avoid heavy load on the server in case of several concurrent users,
 the queuing system is used for creating or updating any of the entities.
