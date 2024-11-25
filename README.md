@@ -18,7 +18,7 @@ Info about the system:
 
 * Rails version: 7.2.2
 
-* Services: Sidekiq, Redis (job queues, cache servers, search engines, etc.)
+* Services: Sidekiq, Redis, Elasticsearch
 
 * Running instructions: run the command: docker compose up --build
 
