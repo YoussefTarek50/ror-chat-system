@@ -1,0 +1,363 @@
+{
+	"info": {
+		"_postman_id": "0da37719-b023-4105-8375-23ee94825a3e",
+		"name": "RoR Chat System REST Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10865570"
+	},
+	"item": [
+		{
+			"name": "ChatApps",
+			"item": [
+				{
+					"name": "Create Chat App",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"chat_app\": {\"name\": \"New Chat app\"}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/chat_app",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat_app"
+							]
+						},
+						"description": "Generated from cURL: curl -X POST http://localhost:3000/chats \\\n-H \"Content-Type: application/json\" \\\n-d '{\"chat\": {\"name\": \"My Chat App\"}}'\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Chat App By Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/chat_app/{application_token}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat_app",
+								"{application_token}"
+							]
+						},
+						"description": "Generated from cURL: curl -X GET \"http://localhost:3000/chat_app/application_token\" "
+					},
+					"response": []
+				},
+				{
+					"name": "Update Chat App By Token",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"chat_app\": {\n    \"name\": \"Test update 1\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/chat_app/{application_token}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat_app",
+								"{application_token}"
+							]
+						},
+						"description": "Generated from cURL: curl -X PATCH \"http://localhost:3000/chat_app/abc123\" \\\n-H \"Content-Type: application/json\" \\\n-d '{\n  \"chat_app\": {\n    \"name\": \"Updated Chat App Name\"\n  }\n}'\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Chat Apps",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/chat_app",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat_app"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chats",
+			"item": [
+				{
+					"name": "Create Chat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"chat\": {\"chat_topic\": \"Animals3\"}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/chat_app/{application_token}/chats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat_app",
+								"{application_token}",
+								"chats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Chat By Number",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"chat\": {\"chat_topic\": \"Animals\"}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/chat_app/{application_token}/chats/{chat_number}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat_app",
+								"{application_token}",
+								"chats",
+								"{chat_number}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Chat By Number",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/chat_app/{application_token}/chats/{chat_number}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat_app",
+								"{application_token}",
+								"chats",
+								"{chat_number}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Chats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/chat_app/{application_token}/chats",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat_app",
+								"{application_token}",
+								"chats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Messages",
+			"item": [
+				{
+					"name": "Create Message",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": {\n    \"text\": \"Hello, this is a 2nd message!\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/chat_app/{application_token}/chats/{chat_number}/messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat_app",
+								"{application_token}",
+								"chats",
+								"{chat_number}",
+								"messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Message By Number",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": {\"text\": \"Updated message\"}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/chat_app/{application_token}/chats/{chat_number}/messages/{message_number}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat_app",
+								"{application_token}",
+								"chats",
+								"{chat_number}",
+								"messages",
+								"{message_number}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Message By Number",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/chat_app/{application_token}/chats/{chat_number}/messages/{message_number}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat_app",
+								"{application_token}",
+								"chats",
+								"{chat_number}",
+								"messages",
+								"{message_number}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search For Message Partially Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/chat_app/{application_token}/chats/{chat_number}/messages/search?query=message",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"chat_app",
+								"{application_token}",
+								"chats",
+								"{chat_number}",
+								"messages",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "message"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl -X GET \"http://localhost:3000/chat_app/abc123/chats/1/messages/search?query=hello\" \\\n-H \"Content-Type: application/json\""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
