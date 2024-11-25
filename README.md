@@ -12,6 +12,11 @@ A queuing system is used (sidekiq) to avoid heavy load on the server in case of 
 the queuing system is used for creating or updating any of the entities.
 The search for a message by part of it's text is done using elastic search.
 
+Database schema can be foound in: db/schema.rb
+Controllers can be found in: app/controllers
+Workers/Jobs can be found in: app/sidekiq
+
+
 Info about the system:
 
 * Ruby version: ruby 3.1.2p20
