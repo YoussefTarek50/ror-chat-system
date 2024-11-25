@@ -23,7 +23,14 @@ Info about the system:
 
 * Services: Sidekiq, Redis, Elasticsearch
 
-* Running instructions: run the command: `docker compose up --build`
+Running prerequisites:
 
-* Postman collection for REST APIs: Import from the file: RoR Chat System REST Copy.postman_collection.json
+* Docker & Docker Compose
+
+Running instructions:
+* Run the command: `docker compose up --build`
+
+Postman Collection:
+
+* Postman collection for REST APIs: https://api.postman.com/collections/10865570-0da37719-b023-4105-8375-23ee94825a3e?access_key=PMAT-01JDJKK6MJBMZ1ZQ68FCZ65VTE
 
